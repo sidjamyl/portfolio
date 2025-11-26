@@ -32,7 +32,7 @@ export function ContactSection() {
 
           <GlassCard className="flex-1 p-1.5 rounded-full">
             <a
-              href="https://github.com/yourusername"
+              href="https://github.com/sidjamyl"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-center gap-3 px-8 py-4 rounded-full bg-white text-black font-medium hover:bg-gray-200 transition-colors"
@@ -44,7 +44,7 @@ export function ContactSection() {
 
           <GlassCard className="flex-1 p-1.5 rounded-full">
             <a
-              href="https://www.linkedin.com/in/yourusername/"
+              href="https://www.linkedin.com/in/jamyl-sid-723820285/"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-center gap-3 px-8 py-4 rounded-full bg-white text-black font-medium hover:bg-gray-200 transition-colors"
