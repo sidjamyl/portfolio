@@ -6,14 +6,14 @@ import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
 
-import {Users} from './collections/Users.ts'
-import { Media } from './collections/Media.ts'
-import { Projects } from './collections/Projects.ts'
-import { Stacks } from './collections/Technologies.ts'
-import { Categories } from './collections/Categories.ts'
-import { Jobs } from './collections/Jobs.ts'
-import { Titles } from './collections/Titles.ts'
-import {Tests} from "./collections/Tests.ts"
+import {Users} from './collections/Users'
+import { Media } from './collections/Media'
+import { Projects } from './collections/Projects'
+import { Stacks } from './collections/Technologies'
+import { Categories } from './collections/Categories'
+import { Jobs } from './collections/Jobs'
+import { Titles } from './collections/Titles'
+import {Tests} from "./collections/Tests"
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)

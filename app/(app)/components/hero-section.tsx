@@ -49,8 +49,8 @@ export function HeroSection({ titles }: HeroSectionProps) {
           <span className="text-4xl md:text-6xl">👋</span>
         </motion.div>
 
-        <h1 className="text-5xl md:text-7xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-white to-white/60 pb-2 text-glow">
-          Hello, I'm Jamyl
+        <h1 className="text-5xl md:text-7xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white via-gray-200 to-gray-400">
+          Hi, I&apos;m <span className="text-blue-400">Your Name</span>
         </h1>
 
         <p className="text-xl md:text-2xl text-gray-400 max-w-2xl mx-auto font-light leading-relaxed">

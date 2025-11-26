@@ -5,7 +5,7 @@ import { ArrowUpRight, Github } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 // Importe le type généré par Payload pour l'autocomplétion
-import type { Project, Media } from '@/payload-types' 
+import type { Project } from '@/payload-types' 
 
 // 1. On définit le type des props attendues
 type ProjectsSectionProps = {

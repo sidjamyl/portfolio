@@ -12,11 +12,11 @@ export default async function Portfolio() {
   const payload = await getPayload({ config })
 
   
-  let projects = await payload.find({ 
+  const projects = await payload.find({ 
     collection: 'projects',
   }).then((res) => res.docs)
 
-  let stacks = await payload.find({ 
+  const stacks = await payload.find({ 
     collection: 'stacks',
     depth: 2, // Populate les relations (StackCategory et icon)
     limit: 1000, // Augmenter la limite par défaut
@@ -26,12 +26,12 @@ export default async function Portfolio() {
     return res.docs
   })
 
-  let jobs = await payload.find({ 
+  const jobs = await payload.find({ 
     collection: 'jobs',
     sort: 'order',
   }).then((res) => res.docs)
 
-  let titles = await payload.find({ 
+  const titles = await payload.find({ 
     collection: 'titles',
     sort: 'order',
     where: {

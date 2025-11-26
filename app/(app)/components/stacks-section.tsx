@@ -1,7 +1,8 @@
 "use client"
+
 import { motion } from "framer-motion"
+import type { Stack } from '../../../payload-types'
 import Image from "next/image"
-import type { Stack, Media } from '@/payload-types'
 
 type StacksSectionProps = {
   stacks: Stack[]

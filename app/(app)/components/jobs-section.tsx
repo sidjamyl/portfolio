@@ -1,8 +1,9 @@
 "use client"
-import { GlassCard } from "./ui/glass-card"
+
 import { motion } from "framer-motion"
+import type { Job } from '../../../payload-types'
+import { GlassCard } from "./ui/glass-card"
 import Image from "next/image"
-import type { Job, Media } from '@/payload-types'
 
 type JobsSectionProps = {
   jobs: Job[]
