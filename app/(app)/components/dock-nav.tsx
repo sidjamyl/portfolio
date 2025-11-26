@@ -1,6 +1,6 @@
 "use client"
 
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion"
+import { motion, useMotionValue, useSpring, useTransform, type MotionValue } from "framer-motion"
 import { Home, User, FolderGit2, Layers, Mail, Github, Linkedin } from "lucide-react"
 import Link from "next/link"
 import { useRef } from "react"
@@ -30,23 +30,28 @@ export function DockNav() {
   )
 }
 
-function DockIcon({ mouseX, icon: Icon, label, href, external }: any) {
+function DockIcon({ 
+  mouseX, 
+  icon: Icon, 
+  label, 
+  href, 
+  external 
+}: { 
+  mouseX: MotionValue<number>
+  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>
+  label: string
+  href: string
+  external?: boolean 
+}) {
   const ref = useRef<HTMLDivElement>(null)
 
-  const distance = useTransform(mouseX, (val : number) => {
+  const distance = useTransform(mouseX, (val: number) => {
     const bounds = ref.current?.getBoundingClientRect() ?? { x: 0, width: 0 }
     return val - bounds.x - bounds.width / 2
   })
 
   const widthSync = useTransform(distance, [-150, 0, 150], [40, 80, 40])
   const width = useSpring(widthSync, { mass: 0.1, stiffness: 150, damping: 12 })
-
-  const handleClick = (id: string) => {
-    const element = document.getElementById(id)
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" })
-    }
-  }
 
   return (
     <Link href={href} target={external ? "_blank" : undefined} aria-label={label}>

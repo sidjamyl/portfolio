@@ -1,9 +1,9 @@
 From node:23-alpine
 WORKDIR /app
 COPY package.json package-lock.json ./
-RUN pnpm install
+RUN npm install
 COPY . .
-RUN pnpm build
+RUN npm run build
 EXPOSE 3000
-CMD ["pnpm", "start"]
+CMD ["npm", "start"]
 
