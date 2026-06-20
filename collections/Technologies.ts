@@ -1,6 +1,11 @@
 import type { CollectionConfig } from 'payload'
 export const Stacks: CollectionConfig = {
   slug: 'stacks',
+  admin: {
+    useAsTitle: 'name',
+    defaultColumns: ['name', 'StackCategory', 'updatedAt'],
+    group: 'Portfolio',
+  },
   access: { 
     read: () => true,
     },

@@ -1,78 +1,83 @@
 "use client"
 
 import { motion } from "framer-motion"
-import type { Job } from '../../../payload-types'
-import { GlassCard } from "./ui/glass-card"
 import Image from "next/image"
+import type { Job } from "@/payload-types"
+import { fallbackJobs } from "../lib/portfolio-content"
+import { mediaAlt, mediaUrl } from "../lib/portfolio-utils"
+import { SectionHeader } from "./section-header"
 
 type JobsSectionProps = {
   jobs: Job[]
 }
 
 export function JobsSection({ jobs }: JobsSectionProps) {
+  const items = jobs.length ? jobs : fallbackJobs
+
   return (
-    <section id="experience" className="py-24 px-6 md:px-12 max-w-7xl mx-auto">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        className="mb-16"
-      >
-        <h2 className="text-3xl md:text-5xl font-bold text-white mb-6 tracking-tight">Experience</h2>
-       
-      </motion.div>
+    <section id="experience" className="section-shell">
+      <SectionHeader number="03" label="Experience" />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {jobs.map((job, index) => {
-          const imageUrl = typeof job.image === 'object' && job.image?.url 
-            ? job.image.url 
-            : "/placeholder.svg"
-          
-          const imageAlt = typeof job.image === 'object' && job.image?.alt
-            ? job.image.alt 
-            : job.position
+      <div className="grid lg:grid-cols-[minmax(0,0.62fr)_minmax(0,1fr)]">
+        <div className="border-b border-line px-6 py-12 lg:border-b-0 lg:border-r lg:px-10 lg:py-16">
+          <h2 className="display-title text-6xl sm:text-7xl lg:text-8xl">
+            Real
+            <br />
+            missions
+          </h2>
+          <p className="mt-6 max-w-md text-xs uppercase leading-6 tracking-spec text-muted">
+            Missions client, freelance, coordination et produits internes.
+          </p>
+        </div>
 
-          return (
-            <motion.div
-              key={job.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-            >
-              <GlassCard className="h-full flex flex-col p-8 hover:bg-white/10 transition-all duration-300 group">
-                {/* Image Container - Centered at top */}
-                <div className="flex justify-center mb-6">
-                  <div className="relative w-24 h-24 rounded-2xl overflow-hidden border-2 border-white/10 shadow-xl group-hover:border-white/20 transition-all duration-300 group-hover:scale-105">
-                    <Image
-                      src={imageUrl}
-                      alt={imageAlt || "Job image"}
-                      fill
-                      className="object-cover"
-                    />
-                    {/* Subtle gradient overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  </div>
+        <ol className="min-w-0 divide-y divide-line overflow-hidden">
+          {items.map((job, index) => {
+            const imageUrl = mediaUrl(job.image, "")
+
+            return (
+              <motion.li
+                key={job.id}
+                initial={{ opacity: 0, x: 28 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, margin: "-60px" }}
+                transition={{ delay: index * 0.08, duration: 0.5 }}
+                className="grid min-w-0 grid-cols-[56px_minmax(0,1fr)] lg:grid-cols-[120px_minmax(0,1fr)_190px]"
+              >
+                <div className="flex items-center justify-center border-r border-line py-6">
+                  <span className="font-display text-2xl text-muted [writing-mode:vertical-rl] lg:[writing-mode:horizontal-tb]">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
                 </div>
 
-                {/* Content */}
-                <div className="flex flex-col items-center text-center flex-grow">
-                  <h3 className="text-xl font-bold text-white mb-3 group-hover:text-glow transition-all duration-300">
+                <div className="min-w-0 px-5 py-6 lg:px-8 lg:py-8">
+                  <h3 className="mt-3 font-display text-4xl uppercase leading-none md:text-5xl">
                     {job.position}
                   </h3>
-                  <p className="text-gray-400 text-sm leading-relaxed">
+
+                  <p className="mt-5 max-w-2xl text-sm leading-7 text-muted">
                     {job.description}
                   </p>
                 </div>
 
-                {/* Bottom accent line */}
-                <div className="mt-6 pt-4 border-t border-white/5 group-hover:border-white/10 transition-colors duration-300">
-                  <div className="h-1 w-12 bg-gradient-to-r from-blue-500/50 to-purple-500/50 rounded-full mx-auto opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="hidden border-l border-line p-5 lg:block">
+                  {imageUrl ? (
+                    <div className="sketch-frame aspect-square bg-panel-soft">
+                      <Image
+                        src={imageUrl}
+                        alt={mediaAlt(job.image, job.position)}
+                        fill
+                        sizes="190px"
+                        className="object-contain p-5"
+                      />
+                    </div>
+                  ) : (
+                    <div className={`${index % 2 === 0 ? "hatch" : "dot-grid"} h-full`} />
+                  )}
                 </div>
-              </GlassCard>
-            </motion.div>
-          )
-        })}
+              </motion.li>
+            )
+          })}
+        </ol>
       </div>
     </section>
   )

@@ -2,6 +2,11 @@ import type { CollectionConfig } from 'payload'
 
 export const Projects: CollectionConfig = {
   slug: 'projects',
+  admin: {
+    useAsTitle: 'title',
+    defaultColumns: ['title', 'type', 'updatedAt'],
+    group: 'Portfolio',
+  },
   access: {
     read: () => true,
     },
@@ -11,10 +16,12 @@ export const Projects: CollectionConfig = {
             name: 'title',
             type: 'text',
             unique: true,
+            required: true,
         },
         {   
             name: 'description',
             type: 'textarea',
+            required: true,
         },
         {
             name: 'media',
@@ -25,6 +32,9 @@ export const Projects: CollectionConfig = {
         {
             name : 'type',
             type: 'textarea',
+            admin: {
+              description: 'Ex: Web app, AI app, Landing page, Hackathon.',
+            },
         },
         {
             name: 'githubLink',

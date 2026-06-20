@@ -1,59 +1,75 @@
-import { DockNav } from "./components/dock-nav"
+import config from "@payload-config"
+import { getPayload } from "payload"
+import type { CollectionSlug, Where } from "payload"
+import type { Job, Project, Stack, Title } from "@/payload-types"
+import { ContactSection } from "./components/contact-section"
 import { HeroSection } from "./components/hero-section"
-import { AboutSection } from "./components/about-section"
 import { JobsSection } from "./components/jobs-section"
 import { ProjectsSection } from "./components/projects-section"
+import { SidePanel } from "./components/side-panel"
 import { StacksSection } from "./components/stacks-section"
-import { ContactSection } from "./components/contact-section"
-import { getPayload } from 'payload'
-import config from '@payload-config'
+import { WinsSection } from "./components/wins-section"
+
+export const dynamic = "force-dynamic"
+
+async function safeFind<T>({
+  collection,
+  depth,
+  limit,
+  sort,
+  where,
+}: {
+  collection: CollectionSlug
+  depth?: number
+  limit?: number
+  sort?: string
+  where?: Where
+}): Promise<T[]> {
+  try {
+    const payload = await getPayload({ config })
+    const result = await payload.find({
+      collection,
+      depth,
+      limit,
+      sort,
+      where,
+    })
+
+    return result.docs as T[]
+  } catch (error) {
+    console.error(`Payload fetch failed for ${collection}:`, error)
+    return []
+  }
+}
+
 export default async function Portfolio() {
-
-  const payload = await getPayload({ config })
-
-  
-  const projects = await payload.find({ 
-    collection: 'projects',
-  }).then((res) => res.docs)
-
-  const stacks = await payload.find({ 
-    collection: 'stacks',
-    depth: 2, // Populate les relations (StackCategory et icon)
-    limit: 1000, // Augmenter la limite par défaut
-  }).then((res) => {
-    console.log('Total stacks fetched:', res.docs.length)
-    console.log('Stacks with categories:', res.docs.filter(s => s.StackCategory).length)
-    return res.docs
-  })
-
-  const jobs = await payload.find({ 
-    collection: 'jobs',
-    sort: 'order',
-  }).then((res) => res.docs)
-
-  const titles = await payload.find({ 
-    collection: 'titles',
-    sort: 'order',
-    where: {
-      isActive: {
-        equals: true,
+  const [projects, stacks, jobs, titles] = await Promise.all([
+    safeFind<Project>({ collection: "projects", depth: 2, limit: 24, sort: "createdAt" }),
+    safeFind<Stack>({ collection: "stacks", depth: 2, limit: 1000 }),
+    safeFind<Job>({ collection: "jobs", depth: 2, sort: "order", limit: 24 }),
+    safeFind<Title>({
+      collection: "titles",
+      sort: "order",
+      limit: 24,
+      where: {
+        isActive: {
+          equals: true,
+        },
       },
-    },
-  }).then((res) => res.docs)
+    }),
+  ])
 
   return (
-    <main className="relative min-h-screen w-full selection:bg-blue-500/30">
-      <HeroSection titles={titles} />
-      <AboutSection />
-      <JobsSection jobs={jobs} />
-      <ProjectsSection projects={projects} />
-      <StacksSection stacks={stacks} />
-      <ContactSection />
-
-      {/* Mobile padding for dock */}
-      <div className="h-24 md:h-0" />
-
-      <DockNav />
-    </main>
+    <div className="min-h-screen w-full lg:grid lg:grid-cols-[320px_minmax(0,1fr)] xl:grid-cols-[440px_minmax(0,1fr)]">
+      <SidePanel />
+      <main className="relative min-w-0">
+        <HeroSection titles={titles} />
+        <ProjectsSection projects={projects} />
+        <JobsSection jobs={jobs} />
+        <StacksSection stacks={stacks} />
+        <WinsSection />
+        <ContactSection />
+      </main>
+    </div>
   )
 }

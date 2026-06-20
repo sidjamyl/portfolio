@@ -1,21 +1,38 @@
 import type React from "react"
-import { Geist, Geist_Mono } from "next/font/google"
+import localFont from "next/font/local"
 import "./globals.css"
 import { SmoothScroll } from "./components/smooth-scroll"
 
-const geistSans = Geist({
+const sans = localFont({
   variable: "--font-sans",
-  subsets: ["latin"],
+  src: [
+    {
+      path: "../../public/fonts/UntitledSans-Regular.woff2",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/UntitledSans-Medium.woff2",
+      weight: "500",
+      style: "normal",
+    },
+  ],
 })
 
-const geistMono = Geist_Mono({
+const mono = localFont({
   variable: "--font-mono",
-  subsets: ["latin"],
+  src: "../../public/fonts/RobotoMono-Regular.woff2",
+})
+
+const jockey = localFont({
+  variable: "--font-display",
+  src: "../../public/fonts/JockeyOne-Regular.ttf",
 })
 
 export const metadata = {
-  title: "Jamyl | Full-Stack Developer",
-  description: "Portfolio of Jamyl, a Full-Stack Developer",
+  title: "SID Jamyl Ryad | Full-Stack Developer",
+  description:
+    "Portfolio de SID Jamyl Ryad, etudiant ingenieur en informatique, developpeur full-stack et builder produit a Alger.",
 }
 
 export default function RootLayout({
@@ -24,8 +41,8 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className="dark">
-      <body className={`${geistSans.variable} ${geistMono.variable} min-h-screen`}>
+    <html lang="fr" className="dark">
+      <body className={`${sans.variable} ${mono.variable} ${jockey.variable} min-h-screen`}>
         <SmoothScroll />
         {children}
       </body>

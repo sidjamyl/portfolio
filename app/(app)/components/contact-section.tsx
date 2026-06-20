@@ -1,60 +1,78 @@
 "use client"
 
-import { motion } from "framer-motion"
-import { Mail, Github, Linkedin } from "lucide-react"
-import { GlassCard } from "./ui/glass-card"
+import { ArrowUpRight, Github, Linkedin, Mail, Phone } from "lucide-react"
+import { profile } from "../lib/portfolio-content"
+import { SectionHeader } from "./section-header"
+
+const links = [
+  {
+    label: profile.email,
+    href: `mailto:${profile.email}`,
+    icon: Mail,
+  },
+  {
+    label: `github / ${profile.github.replace("https://github.com/", "")}`,
+    href: profile.github,
+    icon: Github,
+  },
+  {
+    label: "linkedin / jamyl-sid",
+    href: profile.linkedin,
+    icon: Linkedin,
+  },
+  {
+    label: `phone / ${profile.phone}`,
+    href: `tel:${profile.phone}`,
+    icon: Phone,
+  },
+]
 
 export function ContactSection() {
   return (
-    <section id="contact" className="min-h-screen flex items-center justify-center py-20 px-4">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
-        className="max-w-2xl w-full"
-      >
-        <h2 className="text-4xl md:text-5xl font-bold text-center mb-4">Let&apos;s Connect</h2>
-        <p className="text-gray-400 text-center mb-12">
-          I&apos;m always open to discussing new projects and opportunities.
-        </p>
+    <section id="contact" className="section-shell">
+      <SectionHeader number="06" label="Contact" />
 
-        <div className="flex flex-col md:flex-row gap-4">
-          <GlassCard className="flex-1 p-1.5 rounded-full">
-            <a
-              href="mailto:nj_sid@esi.dz"
-              className="flex items-center justify-center gap-3 px-8 py-4 rounded-full bg-white text-black font-medium hover:bg-gray-200 transition-colors"
-            >
-              <Mail className="w-5 h-5" />
-              <span>Contact Me</span>
-            </a>
-          </GlassCard>
+      <div className="px-6 py-12 lg:px-10 lg:py-16">
+        <h2 className="display-title max-w-5xl text-6xl text-balance sm:text-7xl lg:text-8xl">
+          Let&apos;s build something useful, sharp and shipped.
+        </h2>
 
-          <GlassCard className="flex-1 p-1.5 rounded-full">
+        <div className="mt-10 grid max-w-5xl border-l border-t border-line md:grid-cols-2">
+          {links.map(({ href, label, icon: Icon }) => (
             <a
-              href="https://github.com/sidjamyl"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center justify-center gap-3 px-8 py-4 rounded-full bg-white text-black font-medium hover:bg-gray-200 transition-colors"
+              key={href}
+              href={href}
+              target={href.startsWith("http") ? "_blank" : undefined}
+              rel={href.startsWith("http") ? "noreferrer" : undefined}
+              className="focus-ring group flex min-h-24 items-center justify-between gap-4 border-b border-r border-line p-5 hover-invert"
             >
-              <Github className="w-5 h-5" />
-              <span>GitHub</span>
+              <span className="flex min-w-0 items-center gap-4">
+                <Icon aria-hidden className="h-5 w-5 shrink-0" />
+                <span className="truncate font-display text-2xl uppercase leading-none md:text-3xl">
+                  {label}
+                </span>
+              </span>
+              <ArrowUpRight aria-hidden className="h-5 w-5 shrink-0 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
             </a>
-          </GlassCard>
-
-          <GlassCard className="flex-1 p-1.5 rounded-full">
-            <a
-              href="https://www.linkedin.com/in/jamyl-sid-723820285/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center justify-center gap-3 px-8 py-4 rounded-full bg-white text-black font-medium hover:bg-gray-200 transition-colors"
-            >
-              <Linkedin className="w-5 h-5" />
-              <span>LinkedIn</span>
-            </a>
-          </GlassCard>
+          ))}
+          <a
+            href={profile.resume}
+            target="_blank"
+            rel="noreferrer"
+            className="focus-ring group flex min-h-24 items-center justify-between gap-4 border-b border-r border-line p-5 hover-invert md:col-span-2"
+          >
+            <span className="font-display text-2xl uppercase leading-none md:text-3xl">
+              Resume / download
+            </span>
+            <ArrowUpRight aria-hidden className="h-5 w-5 shrink-0 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+          </a>
         </div>
-      </motion.div>
+
+        <p className="mt-8 flex items-center gap-3 text-xs uppercase tracking-spec text-muted">
+          <span className="h-2 w-2 bg-lime" />
+          {profile.availability}
+        </p>
+      </div>
     </section>
   )
 }

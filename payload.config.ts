@@ -5,14 +5,14 @@ import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
 
-import {Users} from './collections/Users'
+import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { Projects } from './collections/Projects'
 import { Stacks } from './collections/Technologies'
 import { Categories } from './collections/Categories'
 import { Jobs } from './collections/Jobs'
 import { Titles } from './collections/Titles'
-import {Tests} from "./collections/Tests"
+import { Tests } from "./collections/Tests"
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -26,13 +26,13 @@ export default buildConfig({
   },
   collections: [Users, Media, Projects, Stacks, Categories, Jobs, Titles, Tests],
   editor: lexicalEditor(),
-  secret: process.env.PAYLOAD_SECRET || '',
+  secret: process.env.PAYLOAD_SECRET || 'local-portfolio-development-secret',
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
   db: sqliteAdapter({
     client: {
-      url: process.env.DATABASE_URI || '',
+      url: process.env.DATABASE_URI || 'file:./menu.db',
     },
   }),
   plugins: [
