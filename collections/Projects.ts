@@ -4,7 +4,7 @@ export const Projects: CollectionConfig = {
   slug: 'projects',
   admin: {
     useAsTitle: 'title',
-    defaultColumns: ['title', 'type', 'updatedAt'],
+    defaultColumns: ['title', 'section', 'order', 'type'],
     group: 'Portfolio',
   },
   access: {
@@ -12,6 +12,23 @@ export const Projects: CollectionConfig = {
     },
     lockDocuments: false,
     fields: [
+        {
+            name: 'section',
+            type: 'select',
+            options: [
+                { label: 'Client work', value: 'clients' },
+                { label: 'Projects', value: 'projects' },
+            ],
+            defaultValue: 'projects',
+            required: true,
+        },
+        {
+            name: 'order',
+            type: 'number',
+            defaultValue: 0,
+            required: true,
+            admin: { description: 'Lower numbers appear first within the section.' },
+        },
         {
             name: 'title',
             type: 'text',
@@ -22,6 +39,16 @@ export const Projects: CollectionConfig = {
             name: 'description',
             type: 'textarea',
             required: true,
+        },
+        {
+            name: 'tags',
+            type: 'text',
+            admin: { description: 'Comma-separated technologies or disciplines.' },
+        },
+        {
+            name: 'highlights',
+            type: 'text',
+            admin: { description: 'Three short highlights separated by semicolons.' },
         },
         {
             name: 'media',

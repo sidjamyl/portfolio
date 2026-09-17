@@ -31,6 +31,7 @@ export default buildConfig({
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
   db: sqliteAdapter({
+    push: false,
     client: {
       url: process.env.DATABASE_URI || 'file:./menu.db',
     },

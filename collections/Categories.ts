@@ -11,6 +11,13 @@ export const Categories: CollectionConfig = {
   },
   fields: [
     {
+      name: 'order',
+      type: 'number',
+      defaultValue: 0,
+      required: true,
+      admin: { description: 'Lower numbers appear first.' },
+    },
+    {
       name: 'name',
       type: 'text',
     },

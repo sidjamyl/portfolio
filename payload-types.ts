@@ -176,9 +176,25 @@ export interface Media {
  */
 export interface Project {
   id: number;
-  title?: string | null;
-  description?: string | null;
+  section: 'clients' | 'projects';
+  /**
+   * Lower numbers appear first within the section.
+   */
+  order: number;
+  title: string;
+  description: string;
+  /**
+   * Comma-separated technologies or disciplines.
+   */
+  tags?: string | null;
+  /**
+   * Three short highlights separated by semicolons.
+   */
+  highlights?: string | null;
   media?: (number | null) | Media;
+  /**
+   * Ex: Web app, AI app, Landing page, Hackathon.
+   */
   type?: string | null;
   githubLink?: string | null;
   CodeLink?: string | null;
@@ -191,6 +207,10 @@ export interface Project {
  */
 export interface Stack {
   id: number;
+  /**
+   * Lower numbers appear first.
+   */
+  order: number;
   name?: string | null;
   icon: number | Media;
   StackCategory?: (number | null) | Category;
@@ -203,6 +223,10 @@ export interface Stack {
  */
 export interface Category {
   id: number;
+  /**
+   * Lower numbers appear first.
+   */
+  order: number;
   name?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -215,6 +239,10 @@ export interface Job {
   id: number;
   position: string;
   description: string;
+  /**
+   * For example: AUG 2025 → PRESENT.
+   */
+  period?: string | null;
   image: number | Media;
   order?: number | null;
   updatedAt: string;
@@ -365,8 +393,12 @@ export interface MediaSelect<T extends boolean = true> {
  * via the `definition` "projects_select".
  */
 export interface ProjectsSelect<T extends boolean = true> {
+  section?: T;
+  order?: T;
   title?: T;
   description?: T;
+  tags?: T;
+  highlights?: T;
   media?: T;
   type?: T;
   githubLink?: T;
@@ -379,6 +411,7 @@ export interface ProjectsSelect<T extends boolean = true> {
  * via the `definition` "stacks_select".
  */
 export interface StacksSelect<T extends boolean = true> {
+  order?: T;
   name?: T;
   icon?: T;
   StackCategory?: T;
@@ -390,6 +423,7 @@ export interface StacksSelect<T extends boolean = true> {
  * via the `definition` "categories_select".
  */
 export interface CategoriesSelect<T extends boolean = true> {
+  order?: T;
   name?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -401,6 +435,7 @@ export interface CategoriesSelect<T extends boolean = true> {
 export interface JobsSelect<T extends boolean = true> {
   position?: T;
   description?: T;
+  period?: T;
   image?: T;
   order?: T;
   updatedAt?: T;

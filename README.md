@@ -1,6 +1,6 @@
 # SID Jamyl Ryad Portfolio
 
-Next.js + Payload portfolio with an editorial visual system inspired by `hexxt.dev`, `skills.sh`, and the local `effect/website` references.
+Next.js + Payload portfolio styled after `hexxt.dev`, using SID Jamyl Ryad's own content.
 
 ## Run
 
@@ -22,22 +22,23 @@ npm run dev -- --port 3002
 
 ## Content
 
-Payload manages:
+Payload manages the visible portfolio content:
 
-- `projects`
-- `jobs`
-- `stacks`
-- `categories`
-- `titles`
-- `media`
+- `projects`: choose **Client work** or **Projects**, then set **Order**. Tags and three short highlights are editable.
+- `jobs`: set **Order**, **Period**, and one accomplishment per line in the description.
+- `stacks` and `categories`: set **Order** to control the skills grid.
+- `media`: upload images and technology icons.
 
-The CV-derived profile, hackathons, contact links, and project enrichments live in `app/(app)/lib/portfolio-content.ts`.
+The profile and contact links live in `app/(app)/lib/portfolio-content.ts`. The English resume is `public/assets/Jamyl_Ryad_Resume.pdf`; edit the adjacent HTML source before regenerating it.
+
+The tracked `menu.db` contains the updated schema and content. `node scripts/update-portfolio-data.mjs` checks it without changing data. `--apply` reapplies the original content migration and overwrites those portfolio fields, so use it only when restoring this snapshot.
 
 ## Verification
 
 ```bash
 npm run lint
 npm run build
+node scripts/update-portfolio-data.mjs
 ```
 
 Current note: `next build` succeeds, but Payload's Next integration emits a non-blocking `turbopack` config warning with this dependency combination.

@@ -3,7 +3,7 @@ export const Stacks: CollectionConfig = {
   slug: 'stacks',
   admin: {
     useAsTitle: 'name',
-    defaultColumns: ['name', 'StackCategory', 'updatedAt'],
+    defaultColumns: ['name', 'StackCategory', 'order'],
     group: 'Portfolio',
   },
   access: { 
@@ -11,6 +11,13 @@ export const Stacks: CollectionConfig = {
     },
     lockDocuments: false,
     fields: [   
+        {
+            name: 'order',
+            type: 'number',
+            defaultValue: 0,
+            required: true,
+            admin: { description: 'Lower numbers appear first.' },
+        },
         {
             name: 'name',
             type: 'text',   

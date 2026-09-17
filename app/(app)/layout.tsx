@@ -1,7 +1,6 @@
 import type React from "react"
 import localFont from "next/font/local"
 import "./globals.css"
-import { SmoothScroll } from "./components/smooth-scroll"
 
 const sans = localFont({
   variable: "--font-sans",
@@ -32,7 +31,7 @@ const jockey = localFont({
 export const metadata = {
   title: "SID Jamyl Ryad | Full-Stack Developer",
   description:
-    "Portfolio de SID Jamyl Ryad, etudiant ingenieur en informatique, developpeur full-stack et builder produit a Alger.",
+    "SID Jamyl Ryad is a full-stack developer and computer science engineering student in Algiers, building practical web products and business systems.",
 }
 
 export default function RootLayout({
@@ -41,9 +40,8 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="fr" className="dark">
+    <html lang="en" className="dark">
       <body className={`${sans.variable} ${mono.variable} ${jockey.variable} min-h-screen`}>
-        <SmoothScroll />
         {children}
       </body>
     </html>

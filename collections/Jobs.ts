@@ -23,6 +23,11 @@ export const Jobs: CollectionConfig = {
       required: true,
     },
     {
+      name: 'period',
+      type: 'text',
+      admin: { description: 'For example: AUG 2025 → PRESENT.' },
+    },
+    {
       name: 'image',
       type: 'upload',
       relationTo: 'media',
