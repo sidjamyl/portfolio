@@ -39,6 +39,7 @@ The tracked `menu.db` contains the updated schema and content. `node scripts/upd
 npm run lint
 npm run build
 node scripts/update-portfolio-data.mjs
+node scripts/check-portfolio-ui.mjs http://localhost:3000 # with the site running
 ```
 
 Current note: `next build` succeeds, but Payload's Next integration emits a non-blocking `turbopack` config warning with this dependency combination.
