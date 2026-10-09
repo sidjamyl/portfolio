@@ -79,9 +79,10 @@ export function MechanicalCanvas({ variant }: { variant: number }) {
     if (!canvas || !context) return
     const { lines, groups } = geometry(variant)
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
-    let frame = 0, visible = false, elapsed = 0, previous = 0
+    let frame = 0, visible = false, elapsed = 0, drawElapsed = 0, previous = 0
     const render = (time: number) => {
-      elapsed += previous ? Math.min(time - previous, 50) : 0
+      const delta = previous ? Math.min(time - previous, 50) : 0
+      elapsed += delta; drawElapsed += delta
       previous = time
       const width = canvas.clientWidth, height = canvas.clientHeight
       const ratio = Math.min(window.devicePixelRatio, 2)
@@ -103,7 +104,7 @@ export function MechanicalCanvas({ variant }: { variant: number }) {
       context.strokeStyle = "#e8e8e8"; context.lineWidth = 1; context.beginPath()
       let count = 0
       for (const [start, end] of groups) {
-        const visibleEnd = start + Math.floor((end - start) * (reduced ? 1 : Math.min(1, elapsed / 2000)))
+        const visibleEnd = start + Math.floor((end - start) * (reduced ? 1 : Math.min(1, drawElapsed / 2000)))
         count += visibleEnd - start
         for (let i = start; i < visibleEnd; i++) { const a = project(lines[i][0]), b = project(lines[i][1]); context.moveTo(a[0], a[1]); context.lineTo(b[0], b[1]) }
       }
@@ -114,7 +115,7 @@ export function MechanicalCanvas({ variant }: { variant: number }) {
     const observer = new IntersectionObserver(([entry]) => {
       visible = entry.isIntersecting
       cancelAnimationFrame(frame); previous = 0
-      if (visible) frame = requestAnimationFrame(render)
+      if (visible) { drawElapsed = 0; frame = requestAnimationFrame(render) }
     })
     observer.observe(canvas)
     return () => { cancelAnimationFrame(frame); observer.disconnect() }
