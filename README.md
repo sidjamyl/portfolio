@@ -43,3 +43,7 @@ node scripts/check-portfolio-ui.mjs http://localhost:3000 # with the site runnin
 ```
 
 Current note: `next build` succeeds, but Payload's Next integration emits a non-blocking `turbopack` config warning with this dependency combination.
+
+Animation checks (desktop, mobile, reduced motion): start Chrome with `--remote-debugging-port=9223`, then run `node scripts/check-portfolio-animations.mjs http://localhost:3000`. The check uses Chrome's native debugging protocol without extra dependencies.
+
+The portrait uses SVG paths traced from Jamyl's photo. Client previews are in `public/assets`; the GIG preview shows its public sign-in screen. Mechanical scenes render rotating wireframe geometry in canvas and pause outside the viewport.
